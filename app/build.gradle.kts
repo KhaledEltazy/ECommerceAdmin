@@ -87,9 +87,10 @@ dependencies {
 
     // Firebase dependencies using BOM for compatibility
     implementation(platform("com.google.firebase:firebase-bom:32.3.1"))
-    implementation("com.google.firebase:firebase-auth:23.2.0")
+    implementation("com.google.firebase:firebase-auth:22.1.0")
     implementation("com.google.android.gms:play-services-auth:20.7.0")
-    implementation("com.google.firebase:firebase-firestore:25.1.2")
+    implementation("com.google.firebase:firebase-firestore:25.1.1")
+    implementation("com.google.firebase:firebase-storage:21.0.1")
     implementation ("com.google.firebase:firebase-messaging:24.1.0")
 
     implementation ("androidx.credentials:credentials:1.5.0-rc01")

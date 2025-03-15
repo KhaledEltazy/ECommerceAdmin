@@ -76,4 +76,9 @@
     <string name="tab_accessory">إكسسوار</string>
     <string name="tab_furniture">أثاث</string>
 
+    <string name="toast_fill_missing_field">يرجى ملء الحقول الناقصة.</string>
+    <string name="snackBar_resetPassword">تم إرسال رابط إعادة التعيين إلى بريدك الإلكتروني.</string>
+    <string name="toast_google_signIn_failed">فشل تسجيل الدخول باستخدام Google. يرجى المحاولة مرة أخرى</string>
+
+
 </resources>

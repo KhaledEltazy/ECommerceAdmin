@@ -1,6 +1,7 @@
 package com.android.ecommerceadmin.di
 
 import android.content.Context
+import android.content.SharedPreferences
 import com.android.ecommerceadmin.R
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -66,5 +67,11 @@ object AppModule {
 //    fun provideCloudinaryApi(): CloudinaryApi {
 //        return CloudinaryApi()
 //    }
+
+    @Provides
+    @Singleton
+    fun provideSharedPref(@ApplicationContext context : Context): SharedPreferences{
+        return context.getSharedPreferences("AppPrefs",Context.MODE_PRIVATE)
+    }
 
 }

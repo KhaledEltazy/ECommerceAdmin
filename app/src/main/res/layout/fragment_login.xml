@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragments.LoginFragment">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/blury_background"
+        android:scaleType="centerCrop"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".fragments.login_register_fragments.LogInFragment"
+        >
+
+        <ImageView
+            android:id="@+id/ivIcon"
+            android:layout_width="110dp"
+            android:layout_height="60dp"
+            android:src="@drawable/khaled_black"
+            android:layout_marginTop="100dp"
+            app:layout_constraintStart_toStartOf="@id/glStart"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/poppins_thin"
+            android:text="@string/let_s_login"
+            style="@style/h4"
+            app:layout_constraintStart_toStartOf="@id/glStart"
+            app:layout_constraintTop_toBottomOf="@id/ivIcon"
+            app:layout_constraintEnd_toEndOf="@id/glEnd"
+            />
+
+        <TextView
+            android:id="@+id/tvDontHaveAnAccount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/if_you_don_t_have_an_account"
+            style="@style/h2"
+            android:layout_marginTop="4dp"
+            app:layout_constraintStart_toStartOf="@id/glStart"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle"
+            app:layout_constraintEnd_toEndOf="@id/glEnd"
+            />
+
+
+        <EditText
+            android:id="@+id/etEmail"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/edittextHeight"
+            android:hint="@string/email"
+            android:inputType="textEmailAddress"
+            style="@style/editText"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginTop="32dp"
+            app:layout_constraintStart_toStartOf="@id/glStart"
+            app:layout_constraintEnd_toEndOf="@id/glEnd"
+            app:layout_constraintTop_toBottomOf="@id/tvDontHaveAnAccount" />
+
+        <EditText
+            android:id="@+id/etPassword"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/edittextHeight"
+            android:hint="@string/password"
+            style="@style/editText"
+            android:inputType="textPassword"
+            android:gravity="center"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toStartOf="@id/glStart"
+            app:layout_constraintEnd_toEndOf="@id/glEnd"
+            app:layout_constraintTop_toBottomOf="@id/etEmail"/>
+
+        <TextView
+            android:id="@+id/tvForgotPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/forgot_password"
+            style="@style/h2"
+            android:layout_marginTop="4dp"
+            app:layout_constraintStart_toStartOf="@id/glStart"
+            app:layout_constraintTop_toBottomOf="@id/etPassword"/>
+
+        <com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton
+            android:id="@+id/btnLogin"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/edittextHeight"
+            android:text="@string/log_in"
+            style="@style/blueButtonStyle"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@id/tvForgotPassword"
+            app:layout_constraintStart_toStartOf="@id/glStart"
+            app:layout_constraintEnd_toEndOf="@id/glEnd"
+            app:spinning_bar_color="@color/g_white"/>
+
+
+        <com.github.leandroborgesferreira.loadingbutton.customViews.CircularProgressButton
+            android:id="@+id/btnGoogle"
+            android:layout_width="200dp"
+            android:layout_height="@dimen/smallButtonHeight"
+            android:text="@string/google"
+            android:background="@drawable/google_login"
+            app:layout_constraintStart_toStartOf="@id/btnLogin"
+            app:layout_constraintEnd_toEndOf="@id/btnLogin"
+            app:layout_constraintTop_toBottomOf="@id/btnLogin"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="8dp"
+            />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.09"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glEnd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.91"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

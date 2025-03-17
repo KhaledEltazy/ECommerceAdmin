@@ -2,20 +2,17 @@
 <resources>
     <string name="app_name">E Commerce Admin</string>
 
-    <string name="the_right_address">العنوان الصحيح \n للتسوق في \n أي يوم</string>
-    <string name="it_s_now_is_very_easy">"أصبح الآن من السهل \n الوصول إلى أفضل جودة \n بين جميع المنتجات على الإنترنت"</string>
+    <string name="the_right_address">العنوان الصحيح \n لادارة منتجك \n في أي يوم</string>
+    <string name="it_s_now_is_very_easy">يتيح لك هذا الإصدار من تطبيق التجارة الإلكترونية\n إضافة منتجات جديدة،\n إرسال إشعارات للعملاء،\n وإدارة الطلبات الواردة والتحكم في معالجتها بكفاءة.</string>
     <string name="start">ابداء</string>
-    <string name="register">تسجيل</string>
     <string name="log_in">تسجيل الدخول</string>
-    <string name="let_s_register">لنقم بالتسجيل</string>
-    <string name="do_you_have_an_account">هل لديك حساب ؟!</string>
     <string name="first_name">الاسم الأول</string>
     <string name="last_name">الاسم الأخير</string>
     <string name="email">البريد الاكتروني</string>
     <string name="forgot_password">هل نسيت كلمة المرور؟!</string>
     <string name="password">كلمة المرور</string>
-    <string name="let_s_login">لنقم بتسجيل المرور</string>
-    <string name="don_t_have_an_account">ليس لديك حساب</string>
+    <string name="let_s_login">لنقم بتسجيل الدخول كمسؤول.</string>
+    <string name="if_you_don_t_have_an_account">إذا لم يكن لديك حساب، فهذا الإصدار من التطبيق ليس مخصصًا لك.</string>
     <string name="login_text">تسجيل الدخول</string>
     <string name="register_text">تسجيل</string>
     <string name="reset_password">اعادة تعيين كلمة المرور</string>
@@ -78,5 +75,10 @@
     <string name="tab_table">طاولة</string>
     <string name="tab_accessory">إكسسوار</string>
     <string name="tab_furniture">أثاث</string>
+
+    <string name="toast_fill_missing_field">يرجى ملء الحقول الناقصة.</string>
+    <string name="snackBar_resetPassword">تم إرسال رابط إعادة التعيين إلى بريدك الإلكتروني.</string>
+    <string name="toast_google_signIn_failed">فشل تسجيل الدخول باستخدام Google. يرجى المحاولة مرة أخرى</string>
+
 
 </resources>

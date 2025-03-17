@@ -1,4 +1,4 @@
-package com.android.ecommerceadmin.fragments
+package com.android.ecommerceadmin.fragments.login_fragments
 
 import android.content.Intent
 import android.os.Bundle

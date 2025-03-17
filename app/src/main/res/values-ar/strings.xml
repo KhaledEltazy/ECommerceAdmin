@@ -80,5 +80,11 @@
     <string name="snackBar_resetPassword">تم إرسال رابط إعادة التعيين إلى بريدك الإلكتروني.</string>
     <string name="toast_google_signIn_failed">فشل تسجيل الدخول باستخدام Google. يرجى المحاولة مرة أخرى</string>
 
+    <string name="add_product">إضافة منتج</string>
+    <string name="all_products">كل المنتجات</string>
+    <string name="push_notification">إرسال اللإشعارات</string>
+    <string name="all_users">كل المستخدمين</string>
+    <string name="reports">التقارير</string>
+    <string name="admin_settings">إعداد المسؤول</string>
 
 </resources>

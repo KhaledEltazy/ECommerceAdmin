@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/introductionFragment"
-        android:name="com.android.ecommerceadmin.fragments.IntroductionFragment"
+        android:name="com.android.ecommerceadmin.fragments.login_fragments.IntroductionFragment"
         android:label="fragment_introduction"
         tools:layout="@layout/fragment_introduction" >
         <action
@@ -20,7 +20,7 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.android.ecommerceadmin.fragments.LoginFragment"
+        android:name="com.android.ecommerceadmin.fragments.login_fragments.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" />
 </navigation>

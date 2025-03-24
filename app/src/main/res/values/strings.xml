@@ -89,4 +89,16 @@
     <string name="reports">Reports</string>
     <string name="admin_settings">Admin Settings</string>
 
+
+    <string name="product_general_information">Product general information:</string>
+    <string name="offer_percentage_optional">Offer Percentage (Optional)</string>
+    <string name="price">Price</string>
+    <string name="product_description_optional">Product description (Optional)</string>
+    <string name="category">Category</string>
+    <string name="product_details">Product Details:</string>
+    <string name="choose_your_category">Choose your category</string>
+    <string name="sizes_optional_user_between_earch_sizes">Sizes(Optional) | user , between earch Sizes</string>
+    <string name="images">IMAGES</string>
+    <string name="colors">COLORS</string>
+
 </resources>

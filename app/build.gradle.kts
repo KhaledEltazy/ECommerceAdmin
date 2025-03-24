@@ -66,7 +66,7 @@ android {
         }
     }
 
-    buildFeatures{
+    buildFeatures {
         viewBinding = true
     }
 }
@@ -91,11 +91,11 @@ dependencies {
     implementation("com.google.android.gms:play-services-auth:20.7.0")
     implementation("com.google.firebase:firebase-firestore:25.1.1")
     implementation("com.google.firebase:firebase-storage:21.0.1")
-    implementation ("com.google.firebase:firebase-messaging:24.1.0")
+    implementation("com.google.firebase:firebase-messaging:24.1.0")
 
-    implementation ("androidx.credentials:credentials:1.5.0-rc01")
-    implementation ("androidx.credentials:credentials-play-services-auth:1.3.0")
-    implementation ("com.google.android.libraries.identity.googleid:googleid:1.1.1")
+    implementation("androidx.credentials:credentials:1.5.0-rc01")
+    implementation("androidx.credentials:credentials-play-services-auth:1.3.0")
+    implementation("com.google.android.libraries.identity.googleid:googleid:1.1.1")
 
     // UI Components
     implementation("com.github.leandroborgesferreira:loading-button-android:2.3.0")
@@ -119,7 +119,15 @@ dependencies {
 
 
     //cloudinary
-    implementation ("com.cloudinary:cloudinary-android:2.3.1")
+    implementation("com.cloudinary:cloudinary-android:2.3.1")
+
+    //Color picker
+    implementation("com.github.skydoves:colorpickerview:2.2.4")
+
+    //Material Design
+    implementation("com.google.android.material:material:1.3.0-alpha03")
+
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.3")
 }
 
 kapt {

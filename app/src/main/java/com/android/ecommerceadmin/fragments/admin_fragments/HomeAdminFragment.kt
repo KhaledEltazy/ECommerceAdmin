@@ -40,7 +40,7 @@ class HomeAdminFragment : Fragment() {
             val item = itemList.getGridItemList[position]
             when(item.title) {
                 getString(R.string.add_product) ->
-                    Toast.makeText(requireContext(),"you Selected ${item.title}",Toast.LENGTH_SHORT).show()
+                    findNavController().navigate(R.id.action_homeAdminFragment_to_addProductFragment)
                 getString(R.string.all_products) ->
                     Toast.makeText(requireContext(),"you Selected ${item.title}",Toast.LENGTH_SHORT).show()
                 getString(R.string.orders) ->

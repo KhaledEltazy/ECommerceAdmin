@@ -87,4 +87,16 @@
     <string name="reports">التقارير</string>
     <string name="admin_settings">إعداد المسؤول</string>
 
+    <string name="product_general_information"> معلومات المنتج العامة:</string>
+    <string name="offer_percentage_optional">نسبة الخصم (اختياري)</string>
+    <string name="price">السعر</string>
+    <string name="product_description_optional">وصف المنتج (اختياري)</string>
+    <string name="category">الفئة</string>
+    <string name="product_details"> تفاصيل المنتج:</string>
+    <string name="choose_your_category">اختر الفئة</string>
+    <string name="sizes_optional_user_between_earch_sizes">الأحجام (اختياري) | افصل بين كل حجم بفاصلة (,)</string>
+    <string name="images">الصور</string>
+    <string name="colors">الألوان</string>
+
+
 </resources>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/colorShadow"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:src="@color/textColor1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="2dp"
+        android:visibility="invisible"/>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+    android:id="@+id/colorViewer"
+    android:layout_width="21dp"
+    android:layout_height="21dp"
+    android:src="@color/teal_200"
+    app:layout_constraintStart_toStartOf="@id/colorShadow"
+    app:layout_constraintTop_toTopOf="@id/colorShadow"
+    app:layout_constraintEnd_toEndOf="@id/colorShadow"
+    app:layout_constraintBottom_toBottomOf="@id/colorShadow"
+    />
+
+    <ImageView
+        android:id="@+id/colorChecked"
+        android:layout_width="21dp"
+        android:layout_height="21dp"
+        android:src="@drawable/check"
+        app:layout_constraintStart_toStartOf="@id/colorShadow"
+        app:layout_constraintTop_toTopOf="@id/colorShadow"
+        app:layout_constraintEnd_toEndOf="@id/colorShadow"
+        app:layout_constraintBottom_toBottomOf="@id/colorShadow"
+        android:visibility="invisible"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

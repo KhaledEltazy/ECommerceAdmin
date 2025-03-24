@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="4dp">
+
+
+    <ImageView
+        android:id="@+id/selectiveImageIV"
+        android:layout_width="85dp"
+        android:layout_height="85dp"
+        android:src="@color/textColor1"
+        android:scaleType="centerInside"
+        app:layout_constraintTop_toTopOf="@id/productImageIV"
+        app:layout_constraintBottom_toBottomOf="@id/productImageIV"
+        app:layout_constraintStart_toStartOf="@id/productImageIV"
+        app:layout_constraintEnd_toEndOf="@id/productImageIV"
+        android:visibility="invisible"/>
+
+
+    <ImageView
+        android:id="@+id/productImageIV"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@color/g_light_red"
+        android:scaleType="centerInside"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,6 +13,10 @@ class ColorAdapter : RecyclerView.Adapter<ColorAdapter.ColorViewHolder>() {
     //handlingColorSelection
     var onColorSelected : ((Int) -> Unit)? = null
     private var colorSelectionPosition = -1
+    fun setupAdapterList(list : List<Int>){
+        differ.submitList(list)
+        notifyDataSetChanged()
+    }
 
     inner class ColorViewHolder(private val binding : ColorItemBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(color: Int,position: Int){

@@ -94,9 +94,19 @@
     <string name="category">الفئة</string>
     <string name="product_details"> تفاصيل المنتج:</string>
     <string name="choose_your_category">اختر الفئة</string>
-    <string name="sizes_optional_user_between_earch_sizes">الأحجام (اختياري) | افصل بين كل حجم بفاصلة (,)</string>
+    <string name="sizes_optional_user_between_each_sizes">الأحجام (اختياري) | افصل بين كل حجم بفاصلة (,)</string>
     <string name="images">الصور</string>
     <string name="colors">الألوان</string>
-
+    <string name="stock">المخزون</string>
+    <string name="quantity_in_stock">الكمية في المخزن</string>
+    <string-array name="drop_menu_list">
+        <item>الكرسي</item>
+        <item>خزانة</item>
+        <item>طاولة</item>
+        <item>إكسسوار</item>
+        <item>أثاث</item>
+    </string-array>
+    <string name="snackBar_add_product">تم اضافة المنتج</string>
+    <string name="back">الرجوع</string>
 
 </resources>

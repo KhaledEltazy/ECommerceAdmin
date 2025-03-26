@@ -14,6 +14,10 @@ class ImageViewerAdapter : RecyclerView.Adapter<ImageViewerAdapter.ImageViewHold
     //handling image selection
     var selectedImage : ((String) -> Unit)? = null
     private var imageSelectedPosition = -1
+    fun setupImageList(images : List<String>){
+        differ.submitList(images)
+        notifyDataSetChanged()
+    }
 
     inner class ImageViewHolder(private val binding : ImageItemBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(image : String,position: Int){

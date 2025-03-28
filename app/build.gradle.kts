@@ -128,6 +128,10 @@ dependencies {
     implementation("com.google.android.material:material:1.3.0-alpha03")
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.3")
+
+    //Color picker
+    implementation ("com.github.skydoves:colorpickerview:2.2.4")
+
 }
 
 kapt {

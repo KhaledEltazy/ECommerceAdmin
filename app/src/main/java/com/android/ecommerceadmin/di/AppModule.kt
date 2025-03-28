@@ -3,6 +3,7 @@ package com.android.ecommerceadmin.di
 import android.content.Context
 import android.content.SharedPreferences
 import com.android.ecommerceadmin.R
+import com.android.ecommerceadmin.util.CloudinaryApi
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -61,12 +62,12 @@ object AppModule {
         return FirebaseMessaging.getInstance()
     }
 
-//    // Provide Cloudinary Instance**
-//    @Provides
-//    @Singleton
-//    fun provideCloudinaryApi(): CloudinaryApi {
-//        return CloudinaryApi()
-//    }
+   // Provide Cloudinary Instance**
+    @Provides
+    @Singleton
+    fun provideCloudinaryApi(): CloudinaryApi {
+        return CloudinaryApi()
+    }
 
     @Provides
     @Singleton

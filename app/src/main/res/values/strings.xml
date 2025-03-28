@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">E Commerce Admin</string>
+    <string name="default_web_client_id" translatable="false">inside fixed code folder</string>
 
     <string name="the_right_address">The Right Address \n for Manage your \n Business</string>
     <string name="it_s_now_is_very_easy">This version of the E-Commerce app \n enables you to add new products,\n send push notifications to your customers,\n manage incoming orders, and control order processing efficiently.</string>
@@ -63,7 +64,6 @@
     <string name="navigation">Navigation</string>
     <string name="set_your_addresses">Set your Addresses</string>
 
-    <string name="default_web_client_id" translatable="false">719213248976-1ff23piiest8fvmccn3teh4ok9tt1ipr.apps.googleusercontent.com</string>
     <string name="addresses_list">My Addresses</string>
     <string name="add_new_address">Add new address</string>
     <string name="product_name">product Name</string>
@@ -111,4 +111,6 @@
     </string-array>
     <string name="snackBar_add_product">Product added Successfully</string>
     <string name="back">Back</string>
+    <string name="select_color">Select item Color</string>
+    <string name="please_fill_require_text">Please fill all required fields.</string>
 </resources>

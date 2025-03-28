@@ -1,169 +1,304 @@
 package com.android.ecommerceadmin.fragments.admin_fragments
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity.RESULT_OK
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.ecommerceadmin.R
 import com.android.ecommerceadmin.adapters.ColorAdapter
 import com.android.ecommerceadmin.adapters.ImageViewerAdapter
 import com.android.ecommerceadmin.databinding.FragmentAddProductBinding
+import com.android.ecommerceadmin.util.CloudinaryApi
 import com.android.ecommerceadmin.util.Resource
 import com.android.ecommerceadmin.viewmodel.AddProductViewmodel
 import com.google.android.material.snackbar.Snackbar
+import com.skydoves.colorpickerview.ColorEnvelope
+import com.skydoves.colorpickerview.ColorPickerDialog
+import com.skydoves.colorpickerview.listeners.ColorEnvelopeListener
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class AddProductFragment : Fragment() {
 
-    private lateinit var binding : FragmentAddProductBinding
-    //instance from viewModel
-    private val addProductViewModel by viewModels<AddProductViewmodel>()
-    //colorAdapter and ImageAdapter
-    private val colorAdapter by lazy{ ColorAdapter()}
-    private val imageAdapter by lazy {ImageViewerAdapter()}
+    private lateinit var binding: FragmentAddProductBinding
 
-    //initialize variables
-    val productName = binding.etName.text.toString().trim()
-    val category = binding.category.text.toString().trim()
-    val priceStr = binding.etPrice.text.toString().trim()
-    val offerStr = binding.etOffer.text.toString().trim()
-    val description = binding.etProductDescription.text.toString().trim()
-    val sizes = getSizesList(binding.etSizes.text.toString().trim())
-    val stock = binding.etStock.text.toString().trim()
-    private var selectedImages = mutableListOf<Uri>()
+    private val addProductViewModel by viewModels<AddProductViewmodel>()
+
+    private val colorAdapter by lazy { ColorAdapter() }
+    private val imageAdapter by lazy { ImageViewerAdapter() }
+
+    @Inject
+    lateinit var cloudinaryApi: CloudinaryApi
+
+    //variables of dropDownMenuArray
+    private lateinit var dropMenuArray: Array<String>
+
+    //selectiveImage and list of array
+    private val selectedImages = mutableListOf<Uri>()
+    private val images = mutableListOf<String>()
+
+    //selected ColorsList
     private val selectedColors = mutableListOf<Int>()
-    val dropMenuArray = resources.getStringArray(R.array.drop_menu_list)
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        binding = FragmentAddProductBinding.inflate(inflater)
+        binding = FragmentAddProductBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        dropMenuArray = resources.getStringArray(R.array.drop_menu_list)
         populateDropMenu()
         setupColorRv()
         setupImageRv()
         checkingColorRv()
-        checkingImagesRv()
 
-        //observe value of category
-        addProductViewModel.category.observe(requireActivity(), Observer { newText->
-            if(binding.category.text.toString() != newText){
-                binding.category.setText(newText,false)
+        // handling selecting images and showing imageRecyclerView
+        val selectImagesActivityResult =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == RESULT_OK) {
+                    val intent = result.data
+                    selectedImages.clear()
+                    if (intent?.clipData != null) {
+                        val count = intent.clipData?.itemCount ?: 0
+                        (0 until count).forEach {
+                            val imageUri = intent.clipData?.getItemAt(it)?.uri
+                            imageUri?.let { uri ->
+                                selectedImages.add(uri)
+                                images.add(uri.toString())
+                                Log.d("TAG", "${selectedImages}")
+                                Log.d("TAG", "${images}")
+                            }
+                        }
+                    } else {
+                        intent?.data?.let {
+                            selectedImages.add(it)
+                            images.add(it.toString())
+                            Log.d("TAG", "${selectedImages}")
+                            Log.d("TAG", "${images}")
+                        }
+                    }
+                    imageAdapter.setupImageList(images)
+                    checkingImagesRv()
+                }
             }
-        })
 
-        //collect the date of saveProduct
-        lifecycleScope.launch {
-            addProductViewModel.saveProduct.collect{
-                when(it){
-                    is Resource.Loading ->{
-                        showingProgressBar()
+        //handling delete btn for imageRecyclerView
+        imageAdapter.clickedOnDeleteBtn = { position ->
+            if (position !in images.indices) {
+                // Prevent index out of bounds
+            } else {
+
+                images.removeAt(position)
+                imageAdapter.notifyItemRemoved(position)
+
+                imageAdapter.resetImageSelectedPosition()
+
+                imageAdapter.setupImageList(images)
+            }
+
+        }
+
+        //handling delete btn for imageRecyclerView
+        colorAdapter.clickedOnDeleteBtn = { position ->
+            selectedColors.removeAt(position)
+            colorAdapter.resetColorSelectionPosition()
+        }
+
+
+        //handling color selection and btnColor
+        binding.btnColors.setOnClickListener {
+            ColorPickerDialog.Builder(requireActivity())
+                .setTitle(R.string.select_color)
+                .setPositiveButton("Save", object : ColorEnvelopeListener {
+                    override fun onColorSelected(envelope: ColorEnvelope?, fromUser: Boolean) {
+                        envelope?.let {
+                            selectedColors.add(it.color)
+                            colorAdapter.setupAdapterList(selectedColors)
+                            checkingColorRv()
+                        }
                     }
-                    is Resource.Success ->{
-                        resetFields()
-                        hidingProgressBar()
-                        Snackbar.make(requireView(),resources.getString(R.string.snackBar_add_product),Snackbar.LENGTH_LONG)
-                            .setAction(resources.getString(R.string.save)){
-                                //do Nothing
-                            }.show()
-                    }
-                    is Resource.Error->{
-                        hidingProgressBar()
-                        Snackbar.make(requireView(),it.message.toString(),Snackbar.LENGTH_LONG)
-                            .setAction(resources.getString(R.string.back)){
-                                //do nothing
-                            }.show()
-                    }
-                    else -> Unit
+                })
+                .setNegativeButton("Cancel") { colorPicker, _ ->
+                    colorPicker.dismiss()
+                }
+                .show()
+        }
+
+        //handling btnImages
+        binding.btnImages.setOnClickListener {
+            val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
+                putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+                type = "image/*"
+            }
+            selectImagesActivityResult.launch(intent)
+        }
+
+        //handling saveProduct and saveBtn
+        binding.fabSave.setOnClickListener {
+            saveProduct()
+        }
+
+        collectSaveProductState()
+    }
+
+    // save Product function
+    private fun saveProduct() {
+        val productName = binding.etName.text.toString().trim()
+        val category = binding.category.text.toString().trim()
+        val priceStr = binding.etPrice.text.toString().trim()
+        val offerStr = binding.etOffer.text.toString().trim()
+        val description = binding.etProductDescription.text.toString().trim()
+        val sizes = getSizesList(binding.etSizes.text.toString().trim())
+        val stockValue = binding.etStock.text.toString()
+
+        if (productName.isEmpty() || category.isEmpty() || priceStr.isEmpty() || selectedImages.isEmpty()) {
+            Toast.makeText(requireContext(), R.string.please_fill_require_text, Toast.LENGTH_SHORT)
+                .show()
+            return
+        }
+
+        showingProgressBar()
+        lifecycleScope.launch(Dispatchers.IO) {
+            try {
+                val uploadedImages =
+                    selectedImages.map { cloudinaryApi.uploadImage(it, requireContext()) }
+                withContext(Dispatchers.Main) {
+                    addProductViewModel.saveProduct(
+                        productName, category, priceStr.toFloat(),
+                        offerStr.toFloatOrNull(), description.ifEmpty { null },
+                        if (selectedColors.isEmpty()) null else selectedColors,
+                        sizes, uploadedImages, stockValue.toInt()
+                    )
+                }
+            } catch (e: Exception) {
+                Log.e("Save Product Error", "Failed to save product", e)
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(requireContext(), "Failed to save product.", Toast.LENGTH_SHORT)
+                        .show()
+                    hidingProgressBar()
                 }
             }
         }
-
     }
 
-    //implement dropDownMenu
-    fun populateDropMenu(){
-        val adapter = ArrayAdapter(requireActivity(), R.layout.drop_down_list,dropMenuArray)
-        binding.apply {
-            category.setAdapter(adapter)
-            category.setOnItemClickListener{parent,_,position,_->
-                val selectedItem = dropMenuArray[position]
-                addProductViewModel.setCategory(selectedItem)
+    private fun collectSaveProductState() {
+        lifecycleScope.launch {
+            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                addProductViewModel.saveProduct.collect {
+                    when (it) {
+                        is Resource.Loading -> showingProgressBar()
+                        is Resource.Success -> {
+                            resetFields()
+                            hidingProgressBar()
+                            Snackbar.make(
+                                requireView(),
+                                R.string.snackBar_add_product,
+                                Snackbar.LENGTH_LONG
+                            ).show()
+                        }
+
+                        is Resource.Error -> {
+                            Snackbar.make(
+                                requireView(),
+                                it.message.toString(),
+                                Snackbar.LENGTH_LONG
+                            )
+                                .addCallback(object : Snackbar.Callback() {
+                                    override fun onDismissed(
+                                        transientBottomBar: Snackbar?,
+                                        event: Int
+                                    ) {
+                                        hidingProgressBar()
+                                    }
+                                }).show()
+                        }
+
+                        else -> Unit
+                    }
+                }
             }
         }
     }
 
-    //handling progressBar
-    private fun hidingProgressBar() {
-        binding.progressBar.visibility = View.INVISIBLE
+    private fun populateDropMenu() {
+        val adapter = ArrayAdapter(requireContext(), R.layout.drop_down_list, dropMenuArray)
+        binding.category.apply {
+            setAdapter(adapter)
+            setOnItemClickListener { _, _, position, _ ->
+                addProductViewModel.setCategory(dropMenuArray[position])
+            }
+        }
     }
+
     private fun showingProgressBar() {
         binding.progressBar.visibility = View.VISIBLE
     }
 
-    private fun getSizesList(sizes: String): List<String>? {
-        return if (sizes.isEmpty()) null else sizes.split(",")
+    private fun hidingProgressBar() {
+        binding.progressBar.visibility = View.GONE
     }
 
-    private fun resetFields(){
+    private fun getSizesList(sizes: String): List<String>? =
+        sizes.takeIf { it.isNotEmpty() }?.split(",")
+
+    private fun resetFields() {
         binding.apply {
             etName.text.clear()
-            binding.etPrice.text.clear()
-            binding.rvImages.visibility = View.INVISIBLE
+            etPrice.text.clear()
+            rvImages.visibility = View.INVISIBLE
             selectedImages.clear()
             selectedColors.clear()
-            binding.etProductDescription.text.clear()
-            binding.etSizes.text.clear()
-            binding.rvColors.visibility = View.INVISIBLE
-            binding.etStock.text.clear()
+            etProductDescription.text.clear()
+            etSizes.text.clear()
+            rvColors.visibility = View.INVISIBLE
+            etStock.text.clear()
         }
     }
 
-    //implement RecyclerView OF coloring
-    fun setupColorRv(){
+    private fun setupColorRv() {
         binding.rvColors.apply {
             adapter = colorAdapter
-            layoutManager = LinearLayoutManager(requireActivity(),LinearLayoutManager.HORIZONTAL,false)
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         }
     }
 
-    //implement RecyclerView OF Images
-    fun setupImageRv(){
-        binding.rvColors.apply {
-            adapter = colorAdapter
-            layoutManager = LinearLayoutManager(requireActivity(),LinearLayoutManager.HORIZONTAL,false)
+    private fun setupImageRv() {
+        binding.rvImages.apply {
+            adapter = imageAdapter
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         }
     }
 
-    //hiding or showing colorRecyclerView
-    fun checkingColorRv(){
-        if(selectedColors.isEmpty())
-            binding.rvColors.visibility = View.GONE
-        else
-            binding.rvColors.visibility = View.VISIBLE
+    private fun checkingColorRv() {
+        binding.rvColors.visibility = if (selectedColors.isEmpty()) View.GONE else View.VISIBLE
     }
 
-    //hiding or showing colorRecyclerView
-    fun checkingImagesRv(){
-        if(selectedImages.isEmpty())
-            binding.rvImages.visibility = View.GONE
-        else
-            binding.rvImages.visibility = View.VISIBLE
+    private fun checkingImagesRv() {
+        binding.rvImages.visibility = if (selectedImages.isEmpty()) View.GONE else View.VISIBLE
     }
+
+
 }

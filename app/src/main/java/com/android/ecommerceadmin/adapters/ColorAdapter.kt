@@ -12,7 +12,14 @@ import com.android.ecommerceadmin.databinding.ColorItemBinding
 class ColorAdapter : RecyclerView.Adapter<ColorAdapter.ColorViewHolder>() {
     //handlingColorSelection
     var onColorSelected : ((Int) -> Unit)? = null
+    //handling delete btn
+    var clickedOnDeleteBtn : ((Int) -> Unit)? = null
+    //handling color selection changes
     private var colorSelectionPosition = -1
+    fun resetColorSelectionPosition(){
+        colorSelectionPosition = -1
+        notifyDataSetChanged()
+    }
     fun setupAdapterList(list : List<Int>){
         differ.submitList(list)
         notifyDataSetChanged()
@@ -27,9 +34,15 @@ class ColorAdapter : RecyclerView.Adapter<ColorAdapter.ColorViewHolder>() {
             if (position == colorSelectionPosition){
                 binding.colorShadow.visibility = View.VISIBLE
                 binding.colorChecked.visibility = View.VISIBLE
+                binding.deleteBtn.visibility = View.VISIBLE
             } else {
                 binding.colorShadow.visibility = View.INVISIBLE
                 binding.colorChecked.visibility = View.INVISIBLE
+                binding.deleteBtn.visibility = View.GONE
+            }
+
+            binding.deleteBtn.setOnClickListener {
+                clickedOnDeleteBtn?.invoke(position)
             }
         }
     }
@@ -44,7 +57,7 @@ class ColorAdapter : RecyclerView.Adapter<ColorAdapter.ColorViewHolder>() {
         }
     }
 
-    val differ = AsyncListDiffer(this,differUtil)
+    private val differ = AsyncListDiffer(this,differUtil)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ColorViewHolder {
         return ColorViewHolder(ColorItemBinding.inflate(
             LayoutInflater.from(parent.context),parent,false
@@ -63,13 +76,16 @@ class ColorAdapter : RecyclerView.Adapter<ColorAdapter.ColorViewHolder>() {
         holder.itemView.setOnClickListener {
             //handling selected item and disappear when re-click
             if (colorSelectionPosition == holder.adapterPosition) {
+                // Deselect previous
                 notifyItemChanged(colorSelectionPosition)
                 colorSelectionPosition = -1
             } else {
                 if (colorSelectionPosition >= 0)
+                    // Update previous selection
                     notifyItemChanged(colorSelectionPosition)
 
                 colorSelectionPosition = holder.adapterPosition
+                // Update new selection
                 notifyItemChanged(colorSelectionPosition)
                 onColorSelected?.invoke(currentColor)
             }

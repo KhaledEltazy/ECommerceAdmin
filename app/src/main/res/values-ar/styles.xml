@@ -15,7 +15,6 @@
         <item name="android:fontFamily">@font/tajawal_regular_ar</item>
         <item name="android:textColor">@color/textColor1</item>
         <item name="android:textSize">@dimen/h3TextSize</item>
-        <item name="android:textAlignment">viewStart</item>
     </style>
     <style name="blueButtonStyle">
         <item name="android:background">@drawable/blue_background</item>

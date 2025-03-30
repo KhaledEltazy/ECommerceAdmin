@@ -110,5 +110,7 @@
     <string name="back">الرجوع</string>
     <string name="select_color">اختر لون المنتج</string>
     <string name="please_fill_require_text">من فضلك املئ الخانات المطلوبة</string>
+    <string name="edit_product">تعديل المنتج</string>
+    <string name="this_is_how_customers_see_the_product_card_in_the_main_app">هكذا يرى العملاء بطاقة المنتج في التطبيق الرئيسي.</string>
 
 </resources>

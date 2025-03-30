@@ -1,5 +1,9 @@
 package com.android.ecommerceadmin.data
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class Product(
     val id : String,
     val productName : String,
@@ -12,6 +16,6 @@ data class Product(
     val image : List<String>,
     val stock : Int,
     val salesFrequency : Int = 0
-) {
+) : Parcelable{
     constructor() : this("","","",0f,null,null,null,null, emptyList(),0,0)
 }

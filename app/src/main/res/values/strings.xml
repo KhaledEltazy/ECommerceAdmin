@@ -113,5 +113,7 @@
     <string name="back">Back</string>
     <string name="select_color">Select item Color</string>
     <string name="please_fill_require_text">Please fill all required fields.</string>
+    <string name="edit_product">Edit Product</string>
+    <string name="this_is_how_customers_see_the_product_card_in_the_main_app">This is how customers see the product card in the main app.</string>
 
 </resources>

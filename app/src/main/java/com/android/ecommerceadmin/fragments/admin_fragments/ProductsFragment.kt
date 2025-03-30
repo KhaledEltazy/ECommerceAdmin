@@ -123,7 +123,7 @@ class ProductsFragment : Fragment() {
             true
         }
 
-        //handle seeProductButton
+        //handle seeProductButton for searching recyclerView
         searchAdapter.onSeeProductBtnClicked = {
             val bundle = Bundle().apply {
                 putParcelable(PRODUCT_BUNDLE, it)
@@ -133,6 +133,40 @@ class ProductsFragment : Fragment() {
                 bundle
             )
         }
+
+        //handle editProductButton for searching recyclerView
+        searchAdapter.onEditProductBtnClicked = {
+            val bundle = Bundle().apply {
+                putParcelable(PRODUCT_BUNDLE, it)
+            }
+            findNavController().navigate(
+                R.id.action_productsFragment_to_editProductFragment,
+                bundle
+            )
+        }
+
+        //handle seeProductButton for products recyclerView
+        productsAdapter.onSeeProductBtnClicked = {
+            val bundle = Bundle().apply {
+                putParcelable(PRODUCT_BUNDLE, it)
+            }
+            findNavController().navigate(
+                R.id.action_productsFragment_to_productDetailsFragment,
+                bundle
+            )
+        }
+
+        //handle editProductButton for products recyclerView
+        productsAdapter.onEditProductBtnClicked = {
+            val bundle = Bundle().apply {
+                putParcelable(PRODUCT_BUNDLE, it)
+            }
+            findNavController().navigate(
+                R.id.action_productsFragment_to_editProductFragment,
+                bundle
+            )
+        }
+
 
         //collect SearchResult
         collectSearchResult()

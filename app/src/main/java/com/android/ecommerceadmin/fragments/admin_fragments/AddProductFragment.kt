@@ -35,7 +35,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class AddProductFragment : Fragment() {
+open class AddProductFragment : Fragment() {
 
     private lateinit var binding: FragmentAddProductBinding
 

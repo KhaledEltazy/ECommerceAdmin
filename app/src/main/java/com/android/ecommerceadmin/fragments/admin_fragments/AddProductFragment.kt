@@ -37,25 +37,25 @@ import javax.inject.Inject
 @AndroidEntryPoint
 open class AddProductFragment : Fragment() {
 
-    private lateinit var binding: FragmentAddProductBinding
+    protected lateinit var binding: FragmentAddProductBinding
 
-    private val addProductViewModel by viewModels<AddProductViewmodel>()
+    protected val addProductViewModel by viewModels<AddProductViewmodel>()
 
-    private val colorAdapter by lazy { ColorAdapter() }
-    private val imageAdapter by lazy { ImageViewerAdapter() }
+    protected val colorAdapter by lazy { ColorAdapter() }
+    protected val imageAdapter by lazy { ImageViewerAdapter() }
 
     @Inject
     lateinit var cloudinaryApi: CloudinaryApi
 
     //variables of dropDownMenuArray
-    private lateinit var dropMenuArray: Array<String>
+    protected lateinit var dropMenuArray: Array<String>
 
     //selectiveImage and list of array
-    private val selectedImages = mutableListOf<Uri>()
-    private val images = mutableListOf<String>()
+    protected val selectedImages = mutableListOf<Uri>()
+    protected val images = mutableListOf<String>()
 
     //selected ColorsList
-    private val selectedColors = mutableListOf<Int>()
+    protected val selectedColors = mutableListOf<Int>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -251,15 +251,15 @@ open class AddProductFragment : Fragment() {
         }
     }
 
-    private fun showingProgressBar() {
+    protected fun showingProgressBar() {
         binding.progressBar.visibility = View.VISIBLE
     }
 
-    private fun hidingProgressBar() {
+    protected fun hidingProgressBar() {
         binding.progressBar.visibility = View.GONE
     }
 
-    private fun getSizesList(sizes: String): List<String>? =
+    protected fun getSizesList(sizes: String): List<String>? =
         sizes.takeIf { it.isNotEmpty() }?.split(",")
 
     private fun resetFields() {
@@ -292,11 +292,11 @@ open class AddProductFragment : Fragment() {
         }
     }
 
-    private fun checkingColorRv() {
+    protected fun checkingColorRv() {
         binding.rvColors.visibility = if (selectedColors.isEmpty()) View.GONE else View.VISIBLE
     }
 
-    private fun checkingImagesRv() {
+    protected fun checkingImagesRv() {
         binding.rvImages.visibility = if (selectedImages.isEmpty()) View.GONE else View.VISIBLE
     }
 

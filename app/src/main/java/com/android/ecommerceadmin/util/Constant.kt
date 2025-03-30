@@ -7,5 +7,9 @@ object Constant {
     const val SHOPPING_ACTIVITY = 23
     val ACCOUNT_OPTION_FRAGMENT = R.id.action_introductionFragment_to_loginFragment
     const val PRODUCT_BUNDLE = "product"
-
+    const val CHAIR = "Chair"
+    const val CUPBOARD = "Cupboard"
+    const val TABLE = "Table"
+    const val ACCESSORY = "Accessory"
+    const val FURNITURE = "Furniture"
 }

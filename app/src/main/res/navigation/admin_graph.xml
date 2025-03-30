@@ -32,15 +32,28 @@
         android:label="fragment_categories"
         tools:layout="@layout/fragment_categories" >
         <action
-            android:id="@+id/action_categoriesFragment_to_addProductFragment"
-            app:destination="@id/addProductFragment" />
-        <action
-            android:id="@+id/action_categoriesFragment_to_productDetailsFragment"
-            app:destination="@id/productDetailsFragment" />
+            android:id="@+id/action_categoriesFragment_to_productsFragment"
+            app:destination="@id/productsFragment" />
     </fragment>
     <fragment
         android:id="@+id/productDetailsFragment"
         android:name="com.android.ecommerceadmin.fragments.admin_fragments.ProductDetailsFragment"
         android:label="ProductDetailsFragment"
-        tools:layout="@layout/fragment_product_details"/>
+        tools:layout="@layout/fragment_product_details">
+        <argument
+            android:name="product"
+            app:argType="com.android.ecommerceadmin.data.Product" />
+    </fragment>
+    <fragment
+        android:id="@+id/productsFragment"
+        android:name="com.android.ecommerceadmin.fragments.admin_fragments.ProductsFragment"
+        android:label="ProductsFragment"
+        tools:layout="@layout/fragment_products">
+        <action
+            android:id="@+id/action_productsFragment_to_productDetailsFragment"
+            app:destination="@id/productDetailsFragment" />
+        <action
+            android:id="@+id/action_productsFragment_to_addProductFragment"
+            app:destination="@id/addProductFragment" />
+    </fragment>
 </navigation>

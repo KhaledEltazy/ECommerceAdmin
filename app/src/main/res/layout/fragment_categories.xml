@@ -6,10 +6,25 @@
     android:layout_height="match_parent"
     tools:context=".fragments.admin_fragments.CategoriesFragment">
 
+    <TextView
+        android:id="@+id/categoriesTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/h4"
+        android:text="@string/categories"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"/>
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@id/categoriesTV"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

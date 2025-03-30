@@ -20,7 +20,7 @@ class ProductsAdapter : RecyclerView.Adapter<ProductsAdapter.ProductsViewHolder>
     inner class ProductsViewHolder(private val binding : ProductItemBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(product: Product) {
             binding.apply {
-                Glide.with(itemView).load(product.image[0]).into(prouctImageIV)
+                Glide.with(itemView).load(product.images[0]).into(prouctImageIV)
                 productNameTV.text = product.productName
                 priceTV.text = "$ ${product.price}"
                 stockNumber.text = product.stock.toString()

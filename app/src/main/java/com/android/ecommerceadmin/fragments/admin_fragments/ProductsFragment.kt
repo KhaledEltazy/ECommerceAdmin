@@ -10,13 +10,22 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.android.ecommerceadmin.R
 import com.android.ecommerceadmin.adapters.ProductsAdapter
 import com.android.ecommerceadmin.databinding.FragmentProductsBinding
+import com.android.ecommerceadmin.util.Constant.ACCESSORY
+import com.android.ecommerceadmin.util.Constant.ALL_PRODUCT
+import com.android.ecommerceadmin.util.Constant.CHAIR
+import com.android.ecommerceadmin.util.Constant.CUPBOARD
+import com.android.ecommerceadmin.util.Constant.FURNITURE
 import com.android.ecommerceadmin.util.Constant.PRODUCT_BUNDLE
+import com.android.ecommerceadmin.util.Constant.TABLE
 import com.android.ecommerceadmin.util.Resource
 import com.android.ecommerceadmin.util.VerticalItemDecoration
+import com.android.ecommerceadmin.viewmodel.CategoryViewModel
 import com.android.ecommerceadmin.viewmodel.SearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -33,6 +42,11 @@ class ProductsFragment : Fragment() {
     private val searchViewmodel by viewModels<SearchViewModel>()
     var closeClicked: Boolean = true
 
+    private val categoryViewmodel by viewModels<CategoryViewModel>()
+
+    private val args by navArgs<ProductsFragmentArgs>()
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -41,12 +55,19 @@ class ProductsFragment : Fragment() {
         binding = FragmentProductsBinding.inflate(inflater, container, false)
         return binding.root
     }
-    
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //selected category
+        val category = args.category
+
         //calling fun that implement searchRV
         setUpSearchRecyclerView()
+        // calling fun that implement productsRv
+        setUpProductsRecyclerView()
+        //determine which category will appears
+        selectCategory(category)
 
         //implementing search technique by control showing and hiding RecyclersViews during searches
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -115,6 +136,33 @@ class ProductsFragment : Fragment() {
 
         //collect SearchResult
         collectSearchResult()
+        // collect categoryProducts
+        collectCategoryProducts()
+        // collect allProducts
+        collectAllProducts()
+
+        //handling paging in recyclerView
+        binding.productsRV.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            private var isLoading = false
+
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                if (!recyclerView.canScrollVertically(1) && dy > 0 && !isLoading) {
+                    isLoading = true
+                    selectCategory(category)
+                }
+            }
+
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    isLoading = false
+                }
+            }
+        })
+
+
     }
 
     private fun showingProductsRecyclerView() {
@@ -143,7 +191,18 @@ class ProductsFragment : Fragment() {
         }
     }
 
-    fun collectSearchResult(){
+    //implementing ProductRecyclerView
+    fun setUpProductsRecyclerView() {
+        binding.productsRV.apply {
+            adapter = productsAdapter
+            layoutManager =
+                GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
+            addItemDecoration(VerticalItemDecoration())
+        }
+    }
+
+    //collect values of searchResult
+    fun collectSearchResult() {
         lifecycleScope.launch {
             searchViewmodel.searchResult.collect {
                 when (it) {
@@ -163,6 +222,91 @@ class ProductsFragment : Fragment() {
 
                     else -> Unit
                 }
+            }
+        }
+    }
+
+    // collect values of categoryProducts
+    fun collectCategoryProducts() {
+        lifecycleScope.launch {
+            categoryViewmodel.categoryProducts.collect {
+                when (it) {
+                    is Resource.Loading -> {
+                        binding.productsProgressBar.visibility = View.VISIBLE
+                    }
+
+                    is Resource.Success -> {
+                        binding.productsProgressBar.visibility = View.GONE
+                        productsAdapter.differ.submitList(it.data)
+                    }
+
+                    is Resource.Error -> {
+                        binding.productsProgressBar.visibility = View.GONE
+                        Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
+                    }
+
+                    else -> Unit
+                }
+            }
+        }
+    }
+
+    // collect values of allyProducts
+    fun collectAllProducts() {
+        lifecycleScope.launch {
+            categoryViewmodel.allProducts.collect {
+                when (it) {
+                    is Resource.Loading -> {
+                        binding.productsProgressBar.visibility = View.VISIBLE
+                    }
+
+                    is Resource.Success -> {
+                        binding.productsProgressBar.visibility = View.GONE
+                        productsAdapter.differ.submitList(it.data)
+                    }
+
+                    is Resource.Error -> {
+                        binding.productsProgressBar.visibility = View.GONE
+                        Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
+                    }
+
+                    else -> Unit
+                }
+            }
+        }
+    }
+
+    fun selectCategory(category: String) {
+        //select which page will appear
+        when (category) {
+            ALL_PRODUCT -> {
+                categoryViewmodel.fetchAllProducts()
+                binding.categoryTitle.text = ALL_PRODUCT
+            }
+
+            CHAIR -> {
+                categoryViewmodel.fetchCategoryProducts(category)
+                binding.categoryTitle.text = CHAIR
+            }
+
+            TABLE -> {
+                categoryViewmodel.fetchCategoryProducts(category)
+                binding.categoryTitle.text = TABLE
+            }
+
+            CUPBOARD -> {
+                categoryViewmodel.fetchCategoryProducts(category)
+                binding.categoryTitle.text = CUPBOARD
+            }
+
+            ACCESSORY -> {
+                categoryViewmodel.fetchCategoryProducts(category)
+                binding.categoryTitle.text = ACCESSORY
+            }
+
+            FURNITURE -> {
+                categoryViewmodel.fetchCategoryProducts(category)
+                binding.categoryTitle.text = FURNITURE
             }
         }
     }

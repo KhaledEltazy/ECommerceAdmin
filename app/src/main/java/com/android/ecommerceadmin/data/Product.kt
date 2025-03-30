@@ -9,11 +9,11 @@ data class Product(
     val productName : String,
     val category : String,
     val price : Float,
-    val offer: Float? = null,
+    val offer : Float? = null,
     val productDescription : String? = null,
     val color : List<Int>? = null,
     val sizes : List<String>? = null,
-    val image : List<String>,
+    val images : List<String>,
     val stock : Int,
     val salesFrequency : Int = 0
 ) : Parcelable{

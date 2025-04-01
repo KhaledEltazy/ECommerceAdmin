@@ -33,4 +33,11 @@
     <color name="settingText">#4b4f60</color>
     <color name="settingText1">#666666</color>
 
+    <color name="ordered">#FFC107</color>
+    <color name="confirmed">#2196F3</color>
+    <color name="shipped">#FF9800</color>
+    <color name="delivered">#4CAF50</color>
+    <color name="returned">#F44336</color>
+    <color name="cancel">#9E9E9E</color>
+
 </resources>

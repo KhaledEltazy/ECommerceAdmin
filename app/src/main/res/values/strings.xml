@@ -115,5 +115,11 @@
     <string name="please_fill_require_text">Please fill all required fields.</string>
     <string name="edit_product">Edit Product</string>
     <string name="this_is_how_customers_see_the_product_card_in_the_main_app">This is how customers see the product card in the main app.</string>
+    <string name="cutomer_name">Cutomer Name :</string>
+    <string name="ordered">Ordered</string>
+    <string name="confirmed">Confirmed</string>
+    <string name="shipped">Shipped</string>
+    <string name="delivered">Delivered</string>
+    <string name="returned">Returned</string>
 
 </resources>

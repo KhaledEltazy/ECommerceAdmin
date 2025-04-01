@@ -112,5 +112,11 @@
     <string name="please_fill_require_text">من فضلك املئ الخانات المطلوبة</string>
     <string name="edit_product">تعديل المنتج</string>
     <string name="this_is_how_customers_see_the_product_card_in_the_main_app">هكذا يرى العملاء بطاقة المنتج في التطبيق الرئيسي.</string>
+    <string name="cutomer_name">أسم العميل :</string>
+    <string name="ordered">تم الطلب</string>
+    <string name="confirmed">تم التأكيد</string>
+    <string name="shipped">تم الشحن</string>
+    <string name="delivered">تم التسليم</string>
+    <string name="returned">تم الارجاع</string>
 
 </resources>

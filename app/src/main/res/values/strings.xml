@@ -121,5 +121,16 @@
     <string name="shipped">Shipped</string>
     <string name="delivered">Delivered</string>
     <string name="returned">Returned</string>
+    <string name="select_order_status">select Order Status :</string>
+    <string name="confirm_order">Confirm Order</string>
+
+    <string-array name="order_status_array">
+        <item>Ordered</item>
+        <item>Confirmed</item>
+        <item>Shipped</item>
+        <item>Delivered</item>
+        <item>Returned</item>
+        <item>Cancel</item>
+    </string-array>
 
 </resources>

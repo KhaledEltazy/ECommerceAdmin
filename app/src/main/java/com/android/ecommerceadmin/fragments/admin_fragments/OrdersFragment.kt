@@ -8,10 +8,12 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.android.ecommerceadmin.R
 import com.android.ecommerceadmin.adapters.OrdersAdapter
 import com.android.ecommerceadmin.databinding.FragmentOrdersBinding
+import com.android.ecommerceadmin.util.Constant.ORDER_DETAILS
 import com.android.ecommerceadmin.util.Resource
 import com.android.ecommerceadmin.util.VerticalItemDecoration
 import com.android.ecommerceadmin.viewmodel.OrdersViewModel
@@ -39,11 +41,19 @@ class OrdersFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setUpRecyclerView()
 
-        ordersAdapter.onClicked = {
-            //implementing Navigation
-        }
+        ordersViewmodel.getAllOrders()
 
         collectGetOrders()
+
+        ordersAdapter.onClicked = {
+            //implementing Navigation
+            val bundle = Bundle().apply {
+                putParcelable(ORDER_DETAILS,it)
+            }
+            findNavController().navigate(R.id.action_ordersFragment_to_orderDetailsFragment,bundle)
+        }
+
+
 
     }
 

@@ -19,11 +19,11 @@ import com.android.ecommerceadmin.util.Constant.SHIPPED
 
 class OrdersAdapter : RecyclerView.Adapter<OrdersAdapter.OrdersViewHolder>() {
 
-    inner class OrdersViewHolder(val binding : OrderItemBinding) : RecyclerView.ViewHolder(binding.root){
+    inner class OrdersViewHolder(private val binding : OrderItemBinding) : RecyclerView.ViewHolder(binding.root){
         val resources = itemView.resources
         var colorDrawable : Drawable =ColorDrawable(resources.getColor(R.color.ordered))
 
-        private fun bind(currentOrders : Order){
+        fun bind(currentOrders : Order){
             when(currentOrders.orderStatus){
                 ORDERED ->{
                     colorDrawable =ColorDrawable(resources.getColor(R.color.ordered))
@@ -81,6 +81,8 @@ class OrdersAdapter : RecyclerView.Adapter<OrdersAdapter.OrdersViewHolder>() {
 
     override fun onBindViewHolder(holder: OrdersViewHolder, position: Int) {
         val currentOrders = differ.currentList[position]
+
+        holder.bind(currentOrders)
 
         holder.itemView.setOnClickListener {
             onClicked?.invoke(currentOrders)

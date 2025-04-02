@@ -21,4 +21,6 @@ object Constant {
     const val SHIPPED = "Shipped"
     const val DELIVERED = "Delivered"
     const val RETURNED = "Returned"
+
+    const val ORDER_DETAILS = "order_details"
 }

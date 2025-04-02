@@ -118,5 +118,16 @@
     <string name="shipped">تم الشحن</string>
     <string name="delivered">تم التسليم</string>
     <string name="returned">تم الارجاع</string>
+    <string name="select_order_status">اختر حالة الطلب :</string>
+    <string name="confirm_order">تأكيد الطلب</string>
+
+    <string-array name="order_status_array">
+        <item>تم الطلب</item>
+        <item>تم الموافقة</item>
+        <item>تم الشحن</item>
+        <item>تم التسليم</item>
+        <item>تم اللإرجاع</item>
+        <item>الغاء</item>
+    </string-array>
 
 </resources>

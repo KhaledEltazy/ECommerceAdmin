@@ -44,7 +44,7 @@ class HomeAdminFragment : Fragment() {
                 getString(R.string.all_products) ->
                     findNavController().navigate(R.id.action_homeAdminFragment_to_categoriesFragment)
                     getString(R.string.orders) ->
-                    Toast.makeText(requireContext(),"you Selected ${item.title}",Toast.LENGTH_SHORT).show()
+                        findNavController().navigate(R.id.action_homeAdminFragment_to_ordersFragment)
                 getString(R.string.push_notification) ->
                     Toast.makeText(requireContext(),"you Selected ${item.title}",Toast.LENGTH_SHORT).show()
                 getString(R.string.all_users) ->

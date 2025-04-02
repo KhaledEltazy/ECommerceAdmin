@@ -18,11 +18,7 @@ class OrdersViewModel @Inject constructor(
     private val _getOrders = MutableStateFlow<Resource<List<Order>>>(Resource.Undefined())
     val getOrders = _getOrders.asStateFlow()
 
-    init {
-        getAllOrders()
-    }
-
-    private val pagingOrders = PagingOrders()
+    private val pagingOrders : PagingOrders= PagingOrders()
     private var isPagingAllOrders: Boolean = false
 
     fun getAllOrders() {
@@ -35,7 +31,7 @@ class OrdersViewModel @Inject constructor(
                 .get()
                 .addOnSuccessListener {
                     val orders = it.toObjects(Order::class.java)
-                    pagingOrders.isPagingEnd = orders.size < 6 || orders.isEmpty()
+                    pagingOrders.isPagingEnd = orders.size < 5 || orders.isEmpty()
                     pagingOrders.oldOrdersList = orders
                     pagingOrders.pageNumbers++
                     viewModelScope.launch {

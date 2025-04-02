@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class IntroductionViewmodel @Inject constructor(
+class IntroductionViewModel @Inject constructor(
     private val sharedPreferences: SharedPreferences,
     private val auth: FirebaseAuth
 ) : ViewModel()  {

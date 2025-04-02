@@ -1,6 +1,5 @@
 package com.android.ecommerceadmin.viewmodel
 
-import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.android.ecommerceadmin.util.Resource
@@ -15,7 +14,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class LoginViewmodel @Inject constructor(
+class LoginViewModel @Inject constructor(
     val auth : FirebaseAuth,
     private val googleSignInClient : GoogleSignInClient
 ) : ViewModel() {

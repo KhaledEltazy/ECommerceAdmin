@@ -15,7 +15,7 @@ import com.android.ecommerceadmin.activities.AdminActivity
 import com.android.ecommerceadmin.databinding.FragmentLoginBinding
 import com.android.ecommerceadmin.dialog.setupBottomSheetDialog
 import com.android.ecommerceadmin.util.Resource
-import com.android.ecommerceadmin.viewmodel.LoginViewmodel
+import com.android.ecommerceadmin.viewmodel.LoginViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
 import com.google.android.material.snackbar.Snackbar
@@ -29,7 +29,7 @@ class LoginFragment : Fragment() {
 
     private lateinit var binding: FragmentLoginBinding
 
-    private val loginViewmodel by viewModels<LoginViewmodel>()
+    private val loginViewmodel by viewModels<LoginViewModel>()
 
     private val googleSignInLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->

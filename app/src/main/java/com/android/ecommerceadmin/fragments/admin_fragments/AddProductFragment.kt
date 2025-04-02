@@ -23,7 +23,7 @@ import com.android.ecommerceadmin.adapters.ImageViewerAdapter
 import com.android.ecommerceadmin.databinding.FragmentAddProductBinding
 import com.android.ecommerceadmin.util.CloudinaryApi
 import com.android.ecommerceadmin.util.Resource
-import com.android.ecommerceadmin.viewmodel.AddProductViewmodel
+import com.android.ecommerceadmin.viewmodel.AddProductViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.skydoves.colorpickerview.ColorEnvelope
 import com.skydoves.colorpickerview.ColorPickerDialog
@@ -39,7 +39,7 @@ open class AddProductFragment : Fragment() {
 
     protected lateinit var binding: FragmentAddProductBinding
 
-    protected val addProductViewModel by viewModels<AddProductViewmodel>()
+    protected val addProductViewModel by viewModels<AddProductViewModel>()
 
     protected val colorAdapter by lazy { ColorAdapter() }
     protected val imageAdapter by lazy { ImageViewerAdapter() }

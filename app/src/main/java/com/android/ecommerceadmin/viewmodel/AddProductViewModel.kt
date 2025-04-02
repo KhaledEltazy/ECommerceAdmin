@@ -17,7 +17,7 @@ import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
-class AddProductViewmodel @Inject constructor(
+class AddProductViewModel @Inject constructor(
     val firestore: FirebaseFirestore
 ) : ViewModel() {
 

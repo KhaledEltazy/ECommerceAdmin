@@ -14,7 +14,7 @@ import com.android.ecommerceadmin.activities.AdminActivity
 import com.android.ecommerceadmin.databinding.FragmentIntroductionBinding
 import com.android.ecommerceadmin.util.Constant.ACCOUNT_OPTION_FRAGMENT
 import com.android.ecommerceadmin.util.Constant.SHOPPING_ACTIVITY
-import com.android.ecommerceadmin.viewmodel.IntroductionViewmodel
+import com.android.ecommerceadmin.viewmodel.IntroductionViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
 class IntroductionFragment : Fragment() {
 
     private lateinit var binding: FragmentIntroductionBinding
-    private val introViewmodel by viewModels<IntroductionViewmodel>()
+    private val introViewmodel by viewModels<IntroductionViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

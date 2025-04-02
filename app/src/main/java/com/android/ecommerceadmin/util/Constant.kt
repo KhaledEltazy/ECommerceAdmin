@@ -14,4 +14,11 @@ object Constant {
     const val ACCESSORY = "Accessory"
     const val FURNITURE = "Furniture"
     const val CATEGORY = "category"
+
+    const val ORDERED = "Ordered"
+    const val CANCEL = "Cancel"
+    const val CONFIRMED = "Confirmed"
+    const val SHIPPED = "Shipped"
+    const val DELIVERED = "Delivered"
+    const val RETURNED = "Returned"
 }

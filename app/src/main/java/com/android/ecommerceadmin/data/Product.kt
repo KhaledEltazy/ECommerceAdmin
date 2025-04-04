@@ -14,8 +14,8 @@ data class Product(
     val color : List<Int>? = null,
     val sizes : List<String>? = null,
     val images : List<String>,
-    val stock : Int,
-    val salesFrequency : Int = 0
+    var stock : Int,
+    var salesFrequency : Int = 0
 ) : Parcelable{
     constructor() : this("","","",0f,null,null,null,null, emptyList(),0,0)
 }

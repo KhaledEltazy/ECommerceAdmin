@@ -123,6 +123,7 @@
     <string name="returned">Returned</string>
     <string name="select_order_status">select Order Status :</string>
     <string name="confirm_order">Confirm Order</string>
+    <string name="sales_frequency">sales frequency</string>
 
     <string-array name="order_status_array">
         <item>Ordered</item>

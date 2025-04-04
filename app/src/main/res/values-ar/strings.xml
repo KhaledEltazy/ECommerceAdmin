@@ -120,6 +120,7 @@
     <string name="returned">تم الارجاع</string>
     <string name="select_order_status">اختر حالة الطلب :</string>
     <string name="confirm_order">تأكيد الطلب</string>
+    <string name="sales_frequency">عدد مرات البيع</string>
 
     <string-array name="order_status_array">
         <item>تم الطلب</item>

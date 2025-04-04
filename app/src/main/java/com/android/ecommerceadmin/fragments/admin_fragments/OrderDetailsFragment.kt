@@ -26,6 +26,7 @@ import com.android.ecommerceadmin.util.Constant.SHIPPED
 import com.android.ecommerceadmin.util.Resource
 import com.android.ecommerceadmin.util.VerticalItemDecoration
 import com.android.ecommerceadmin.viewmodel.OrderDetailsViewModel
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -105,14 +106,18 @@ class OrderDetailsFragment : Fragment() {
         binding.confirmOrderBtn.setOnClickListener {
             if (selectedItem == order.orderStatus){
                 Toast.makeText(requireContext(),"Please change Order Status",Toast.LENGTH_LONG).show()
-            } else {
-
+            } else if(selectedItem == DELIVERED){
+                orderDetailsViewModel.deliveredOrder(order.orderId)
+                orderDetailsViewModel.changeTheStateOfOrder(order.orderId,selectedItem)
+            }
+            else {
                 orderDetailsViewModel.changeTheStateOfOrder(order.orderId,selectedItem)
             }
         }
 
-        collectConfirmOrder()
 
+        collectOrderState()
+        collectConfirmationOrder()
     }
 
     private fun setOrderDetailsProductRv() {
@@ -130,14 +135,33 @@ class OrderDetailsFragment : Fragment() {
         binding.orderStatusSpinner.adapter = spinnerAdapter
     }
 
-    private fun collectConfirmOrder(){
+    private fun collectOrderState(){
         lifecycleScope.launch {
-            orderDetailsViewModel.confirmOrder.collect{
+            orderDetailsViewModel.orderState.collect{
                 when(it){
                     is Resource.Loading -> binding.orderDetailsProgressBar.visibility = View.VISIBLE
                     is Resource.Success ->{
                         binding.orderDetailsProgressBar.visibility = View.GONE
-                        Toast.makeText(requireContext(),"Order updated Successfully",Toast.LENGTH_LONG).show()
+                        Snackbar.make(requireView(),"Order updated Successfully",Snackbar.LENGTH_LONG).show()
+                    }
+                    is Resource.Error ->{
+                        binding.orderDetailsProgressBar.visibility = View.GONE
+                        Snackbar.make(requireView(),it.message.toString(),Snackbar.LENGTH_LONG).show()
+                    }
+                    else -> Unit
+                }
+            }
+        }
+    }
+
+    private fun collectConfirmationOrder(){
+        lifecycleScope.launch {
+            orderDetailsViewModel.deliveredOrder.collect{
+                when(it){
+                    is Resource.Loading -> binding.orderDetailsProgressBar.visibility = View.VISIBLE
+                    is Resource.Success ->{
+                        binding.orderDetailsProgressBar.visibility = View.GONE
+                        Toast.makeText(requireContext(),"product changes stock and salesFrequency Successfully",Toast.LENGTH_LONG).show()
                     }
                     is Resource.Error ->{
                         binding.orderDetailsProgressBar.visibility = View.GONE

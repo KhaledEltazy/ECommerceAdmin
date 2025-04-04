@@ -82,7 +82,7 @@ class AddProductViewModel @Inject constructor(
         }
 
         firestore.collection("products").document(id)
-            .set(product, SetOptions.merge()) // Correctly updates the product
+            .set(product, SetOptions.merge())
             .addOnSuccessListener {
                 viewModelScope.launch {
                     _editProduct.emit(Resource.Success(product))

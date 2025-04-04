@@ -61,7 +61,7 @@
     </style>
 
     <style name="MediumTextViewThin">
-        <item name="android:textColor">@color/settingText1</item>
+        <item name="android:textColor">@color/textColor2</item>
         <item name="android:textSize">15sp</item>
         <item name="fontFamily">@font/sf_pro_display</item>
         <item name="android:textStyle">bold</item>

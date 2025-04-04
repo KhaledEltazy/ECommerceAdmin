@@ -6,12 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.ecommerceadmin.R
 import com.android.ecommerceadmin.adapters.OrderDetailsProductAdapter
+import com.android.ecommerceadmin.data.Order
 import com.android.ecommerceadmin.databinding.FragmentOrderDetailsBinding
 import com.android.ecommerceadmin.util.Constant.CANCEL
 import com.android.ecommerceadmin.util.Constant.CONFIRMED
@@ -19,16 +23,22 @@ import com.android.ecommerceadmin.util.Constant.DELIVERED
 import com.android.ecommerceadmin.util.Constant.ORDERED
 import com.android.ecommerceadmin.util.Constant.RETURNED
 import com.android.ecommerceadmin.util.Constant.SHIPPED
+import com.android.ecommerceadmin.util.Resource
 import com.android.ecommerceadmin.util.VerticalItemDecoration
+import com.android.ecommerceadmin.viewmodel.OrderDetailsViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class OrderDetailsFragment : Fragment() {
     private lateinit var binding: FragmentOrderDetailsBinding
     private val ordersDetailsArgs by navArgs<OrderDetailsFragmentArgs>()
     private val orderDetailsAdapter by lazy { OrderDetailsProductAdapter() }
+    private val orderDetailsViewModel by viewModels<OrderDetailsViewModel>()
     private var spinnerPosition: Int = 0
     private var isUserInteraction = false
+    private var selectedItem = "Ordered"
+    private lateinit var updatedOrder : Order
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -55,6 +65,14 @@ class OrderDetailsFragment : Fragment() {
         }
         setUpSpinner()
 
+        //hiding confirmedBtn in cancel, Returned and delivered Orders
+            if(order.orderStatus == DELIVERED || order.orderStatus == CANCEL || order.orderStatus == RETURNED){
+                binding.confirmOrderBtn.visibility = View.GONE
+                binding.confirmOrderText.text = "The Order Had been ${order.orderStatus}"
+                binding.confirmOrderText.visibility = View.VISIBLE
+            }
+
+
         binding.apply {
             tvOrderId.text = "Order ${order.orderId}"
             tvFullName.text = order.address.fullName
@@ -71,8 +89,7 @@ class OrderDetailsFragment : Fragment() {
         binding.orderStatusSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 if (isUserInteraction) {
-                    val selectedItem = parent.getItemAtPosition(position).toString()
-                    // Handle order status change
+                    selectedItem = parent.getItemAtPosition(position).toString()
                 }
             }
 
@@ -83,6 +100,19 @@ class OrderDetailsFragment : Fragment() {
         binding.orderStatusSpinner.viewTreeObserver.addOnGlobalLayoutListener {
             isUserInteraction = true
         }
+
+        //handle ConfirmOrderBtn
+        binding.confirmOrderBtn.setOnClickListener {
+            if (selectedItem == order.orderStatus){
+                Toast.makeText(requireContext(),"Please change Order Status",Toast.LENGTH_LONG).show()
+            } else {
+
+                orderDetailsViewModel.changeTheStateOfOrder(order.orderId,selectedItem)
+            }
+        }
+
+        collectConfirmOrder()
+
     }
 
     private fun setOrderDetailsProductRv() {
@@ -99,4 +129,25 @@ class OrderDetailsFragment : Fragment() {
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.orderStatusSpinner.adapter = spinnerAdapter
     }
-}
+
+    private fun collectConfirmOrder(){
+        lifecycleScope.launch {
+            orderDetailsViewModel.confirmOrder.collect{
+                when(it){
+                    is Resource.Loading -> binding.orderDetailsProgressBar.visibility = View.VISIBLE
+                    is Resource.Success ->{
+                        binding.orderDetailsProgressBar.visibility = View.GONE
+                        Toast.makeText(requireContext(),"Order updated Successfully",Toast.LENGTH_LONG).show()
+                    }
+                    is Resource.Error ->{
+                        binding.orderDetailsProgressBar.visibility = View.GONE
+                        Toast.makeText(requireContext(),it.message,Toast.LENGTH_LONG).show()
+                    }
+                    else -> Unit
+                }
+            }
+        }
+    }
+
+
+ }

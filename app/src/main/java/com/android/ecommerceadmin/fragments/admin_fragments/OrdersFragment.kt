@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.android.ecommerceadmin.R
 import com.android.ecommerceadmin.adapters.OrdersAdapter
 import com.android.ecommerceadmin.databinding.FragmentOrdersBinding
@@ -53,6 +54,26 @@ class OrdersFragment : Fragment() {
             findNavController().navigate(R.id.action_ordersFragment_to_orderDetailsFragment,bundle)
         }
 
+        //handling paging in recyclerView
+        binding.orderRv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            private var isLoading = false
+
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                if (!recyclerView.canScrollVertically(1) && dy > 0 && !isLoading) {
+                    isLoading = true
+                    ordersViewmodel.getAllOrders()
+                }
+            }
+
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    isLoading = false
+                }
+            }
+        })
 
 
     }

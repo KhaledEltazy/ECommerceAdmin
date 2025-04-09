@@ -23,6 +23,9 @@
         <action
             android:id="@+id/action_homeAdminFragment_to_ordersFragment"
             app:destination="@id/ordersFragment" />
+        <action
+            android:id="@+id/action_homeAdminFragment_to_pushNotificationFragment"
+            app:destination="@id/pushNotificationFragment" />
     </fragment>
     <fragment
         android:id="@+id/addProductFragment"
@@ -92,4 +95,9 @@
             android:name="order_details"
             app:argType="com.android.ecommerceadmin.data.Order" />
     </fragment>
+    <fragment
+        android:id="@+id/pushNotificationFragment"
+        android:name="com.android.ecommerceadmin.fragments.admin_fragments.PushNotificationFragment"
+        android:label="PushNotificationFragment"
+        tools:layout="@layout/fragment_push_notification"/>
 </navigation>

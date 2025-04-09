@@ -91,7 +91,7 @@ dependencies {
     implementation("com.google.android.gms:play-services-auth:20.7.0")
     implementation("com.google.firebase:firebase-firestore:25.1.1")
     implementation("com.google.firebase:firebase-storage:21.0.1")
-    implementation("com.google.firebase:firebase-messaging:24.1.0")
+    implementation("com.google.firebase:firebase-messaging:24.1.1")
 
     implementation("androidx.credentials:credentials:1.5.0-rc01")
     implementation("androidx.credentials:credentials-play-services-auth:1.3.0")
@@ -132,6 +132,13 @@ dependencies {
     //Color picker
     implementation ("com.github.skydoves:colorpickerview:2.2.4")
 
+    // ViewModel dependencies
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
+    implementation("com.squareup.okhttp3:okhttp:4.10.0")
+
+    implementation ("com.google.api-client:google-api-client:1.34.0")
+    implementation ("com.google.http-client:google-http-client-gson:1.40.1")
+    implementation ("com.google.auth:google-auth-library-oauth2-http:1.12.0")
 }
 
 kapt {

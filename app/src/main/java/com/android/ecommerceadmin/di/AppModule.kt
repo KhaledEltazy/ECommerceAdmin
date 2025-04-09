@@ -1,5 +1,6 @@
 package com.android.ecommerceadmin.di
 
+import PushNotificationRepository
 import android.content.Context
 import android.content.SharedPreferences
 import com.android.ecommerceadmin.R
@@ -75,4 +76,12 @@ object AppModule {
         return context.getSharedPreferences("AppPrefs",Context.MODE_PRIVATE)
     }
 
+
+    @Provides
+    @Singleton
+    fun providePushNotificationRepository(
+        @ApplicationContext context: Context
+    ): PushNotificationRepository {
+        return PushNotificationRepository(context)
+    }
 }

@@ -17,9 +17,9 @@ import com.android.ecommerceadmin.util.GridItemsList
 class HomeAdminFragment : Fragment() {
     private lateinit var binding: FragmentHomeAdminBinding
 
-    private lateinit var itemList : GridItemsList
+    private lateinit var itemList: GridItemsList
 
-    private lateinit var gridAdapter : GridViewAdapter
+    private lateinit var gridAdapter: GridViewAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,27 +32,45 @@ class HomeAdminFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         itemList = GridItemsList(requireContext())
-        gridAdapter = GridViewAdapter(requireContext(),itemList.getGridItemList)
+        gridAdapter = GridViewAdapter(requireContext(), itemList.getGridItemList)
         binding.gvAdmin.adapter = gridAdapter
 
         //handle navigation of each icon
-        binding.gvAdmin.setOnItemClickListener{_,_,position,_ ->
+        binding.gvAdmin.setOnItemClickListener { _, _, position, _ ->
             val item = itemList.getGridItemList[position]
-            when(item.title) {
+            when (item.title) {
                 getString(R.string.add_product) ->
                     findNavController().navigate(R.id.action_homeAdminFragment_to_addProductFragment)
+
                 getString(R.string.all_products) ->
                     findNavController().navigate(R.id.action_homeAdminFragment_to_categoriesFragment)
-                    getString(R.string.orders) ->
-                        findNavController().navigate(R.id.action_homeAdminFragment_to_ordersFragment)
+
+                getString(R.string.orders) ->
+                    findNavController().navigate(R.id.action_homeAdminFragment_to_ordersFragment)
+
                 getString(R.string.push_notification) ->
-                    Toast.makeText(requireContext(),"you Selected ${item.title}",Toast.LENGTH_SHORT).show()
+                    findNavController().navigate(R.id.action_homeAdminFragment_to_pushNotificationFragment)
+
                 getString(R.string.all_users) ->
-                    Toast.makeText(requireContext(),"you Selected ${item.title}",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "you Selected ${item.title}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
                 getString(R.string.reports) ->
-                    Toast.makeText(requireContext(),"you Selected ${item.title}",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "you Selected ${item.title}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
                 getString(R.string.admin_settings) ->
-                    Toast.makeText(requireContext(),"you Selected ${item.title}",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "you Selected ${item.title}",
+                        Toast.LENGTH_SHORT
+                    ).show()
             }
         }
 

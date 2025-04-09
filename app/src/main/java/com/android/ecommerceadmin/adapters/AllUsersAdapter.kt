@@ -12,7 +12,7 @@ import com.bumptech.glide.Glide
 
 class AllUsersAdapter : RecyclerView.Adapter<AllUsersAdapter.AllUserViewHolder>() {
 
-    private val onClickedItem : ((User) -> Unit)? = null
+    var onClickedItem : ((User) -> Unit)? = null
 
     inner class AllUserViewHolder(private val binding : AllUsersItemBinding) :
             RecyclerView.ViewHolder(binding.root){

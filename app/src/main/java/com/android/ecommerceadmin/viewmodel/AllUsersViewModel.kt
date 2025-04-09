@@ -26,7 +26,7 @@ class AllUsersViewModel @Inject constructor(
         viewModelScope.launch {
             _allUsers.emit(Resource.Loading())
         }
-        firestore.collection("users").get()
+        firestore.collection("user").get()
             .addOnSuccessListener {
                 val users = it.toObjects(User::class.java)
                 viewModelScope.launch {

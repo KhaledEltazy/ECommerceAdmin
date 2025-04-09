@@ -121,6 +121,10 @@
     <string name="select_order_status">اختر حالة الطلب :</string>
     <string name="confirm_order">تأكيد الطلب</string>
     <string name="sales_frequency">عدد مرات البيع</string>
+    <string name="user_information">معلومات المستخدم</string>
+    <string name="no_address_has_been_set_by_the_user">لم يقم هذا المستخدم بأي طلبات.</string>
+    <string name="addresses">العناوين</string>
+    <string name="no_orders_have_been_placed_by_this_user">لم يُقم المستخدم بتحديد عنوان.</string>
 
     <string-array name="order_status_array">
         <item>تم الطلب</item>

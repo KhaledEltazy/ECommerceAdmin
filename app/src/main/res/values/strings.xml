@@ -124,6 +124,10 @@
     <string name="select_order_status">select Order Status :</string>
     <string name="confirm_order">Confirm Order</string>
     <string name="sales_frequency">sales frequency</string>
+    <string name="user_information">User Information :</string>
+    <string name="no_address_has_been_set_by_the_user">No address has been set by the user.</string>
+    <string name="addresses">Addresses:</string>
+    <string name="no_orders_have_been_placed_by_this_user">No orders have been placed by this user.</string>
 
     <string-array name="order_status_array">
         <item>Ordered</item>

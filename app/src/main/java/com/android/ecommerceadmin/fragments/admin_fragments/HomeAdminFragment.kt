@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.navigateUp
 import com.android.ecommerceadmin.R
 import com.android.ecommerceadmin.adapters.GridViewAdapter
 import com.android.ecommerceadmin.data.GridItem
@@ -48,7 +49,7 @@ class HomeAdminFragment : Fragment() {
                 getString(R.string.push_notification) ->
                     Toast.makeText(requireContext(),"you Selected ${item.title}",Toast.LENGTH_SHORT).show()
                 getString(R.string.all_users) ->
-                    Toast.makeText(requireContext(),"you Selected ${item.title}",Toast.LENGTH_SHORT).show()
+                    findNavController().navigate(R.id.action_homeAdminFragment_to_allUserFragment)
                 getString(R.string.reports) ->
                     Toast.makeText(requireContext(),"you Selected ${item.title}",Toast.LENGTH_SHORT).show()
                 getString(R.string.admin_settings) ->

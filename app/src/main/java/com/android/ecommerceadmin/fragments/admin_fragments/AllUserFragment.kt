@@ -8,9 +8,12 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.android.ecommerceadmin.R
 import com.android.ecommerceadmin.adapters.AllUsersAdapter
 import com.android.ecommerceadmin.databinding.FragmentAllUsersBinding
+import com.android.ecommerceadmin.util.Constant.USER_BUNDLE
 import com.android.ecommerceadmin.util.Resource
 import com.android.ecommerceadmin.util.VerticalItemDecoration
 import com.android.ecommerceadmin.viewmodel.AllUsersViewModel
@@ -39,7 +42,10 @@ class AllUserFragment : Fragment() {
         setUpAllUserRecyclerView()
 
         allUsersAdapter.onClickedItem ={
-            //implement navigation
+            val bundle = Bundle().apply {
+                putParcelable(USER_BUNDLE,it)
+            }
+            findNavController().navigate(R.id.action_allUserFragment_to_userDetailsFragment,bundle)
         }
 
         collectAllUsers()

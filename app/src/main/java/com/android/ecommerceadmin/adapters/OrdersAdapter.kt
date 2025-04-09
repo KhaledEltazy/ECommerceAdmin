@@ -3,6 +3,7 @@ package com.android.ecommerceadmin.adapters
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
@@ -17,7 +18,7 @@ import com.android.ecommerceadmin.util.Constant.ORDERED
 import com.android.ecommerceadmin.util.Constant.RETURNED
 import com.android.ecommerceadmin.util.Constant.SHIPPED
 
-class OrdersAdapter : RecyclerView.Adapter<OrdersAdapter.OrdersViewHolder>() {
+class OrdersAdapter(var customerIfo : Boolean = true) : RecyclerView.Adapter<OrdersAdapter.OrdersViewHolder>() {
 
     inner class OrdersViewHolder(private val binding : OrderItemBinding) : RecyclerView.ViewHolder(binding.root){
         val resources = itemView.resources
@@ -48,9 +49,13 @@ class OrdersAdapter : RecyclerView.Adapter<OrdersAdapter.OrdersViewHolder>() {
             }
 
             binding.apply {
+                if(customerIfo){
+                    customerName.text = currentOrders.address.fullName
+                } else {
+                    customerInfoLL.visibility = View.GONE
+                }
                 tvOrderId.text = currentOrders.orderId.toString()
                 tvOrderDate.text = currentOrders.date
-                customerName.text = currentOrders.address.fullName
                 imageOrderState.setImageDrawable(colorDrawable)
             }
         }

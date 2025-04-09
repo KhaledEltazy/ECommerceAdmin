@@ -23,4 +23,5 @@ object Constant {
     const val RETURNED = "Returned"
 
     const val ORDER_DETAILS = "order_details"
+    const val USER_BUNDLE = "user"
 }

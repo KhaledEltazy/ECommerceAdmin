@@ -99,5 +99,18 @@
         android:id="@+id/allUserFragment"
         android:name="com.android.ecommerceadmin.fragments.admin_fragments.AllUserFragment"
         android:label="AllUserFragment"
-        tools:layout="@layout/fragment_all_users"/>
+        tools:layout="@layout/fragment_all_users">
+        <action
+            android:id="@+id/action_allUserFragment_to_userDetailsFragment"
+            app:destination="@id/userDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userDetailsFragment"
+        android:name="com.android.ecommerceadmin.fragments.admin_fragments.UserDetailsFragment"
+        android:label="UserDetailsFragment"
+        tools:layout="@layout/fragment_user_details">
+        <argument
+            android:name="user"
+            app:argType="com.android.ecommerceadmin.data.User" />
+    </fragment>
 </navigation>

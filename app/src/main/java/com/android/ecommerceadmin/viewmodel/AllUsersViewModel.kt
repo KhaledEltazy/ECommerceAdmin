@@ -26,15 +26,19 @@ class AllUsersViewModel @Inject constructor(
         viewModelScope.launch {
             _allUsers.emit(Resource.Loading())
         }
+
         firestore.collection("user").get()
-            .addOnSuccessListener {
-                val users = it.toObjects(User::class.java)
+            .addOnSuccessListener { documents ->
+                val users = documents.map { doc ->
+                    doc.toObject(User::class.java).copy(userId = doc.id)
+                }
                 viewModelScope.launch {
                     _allUsers.emit(Resource.Success(users))
                 }
-            }.addOnFailureListener {
+            }
+            .addOnFailureListener { e ->
                 viewModelScope.launch {
-                    _allUsers.emit(Resource.Error(it.message.toString()))
+                    _allUsers.emit(Resource.Error(e.message ?: "Something went wrong"))
                 }
             }
     }

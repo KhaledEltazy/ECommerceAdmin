@@ -53,7 +53,7 @@ class HomeAdminFragment : Fragment() {
                 getString(R.string.reports) ->
                     Toast.makeText(requireContext(),"you Selected ${item.title}",Toast.LENGTH_SHORT).show()
                 getString(R.string.admin_settings) ->
-                    Toast.makeText(requireContext(),"you Selected ${item.title}",Toast.LENGTH_SHORT).show()
+                    findNavController().navigate(R.id.action_homeAdminFragment_to_adminSettingFragment)
             }
         }
 

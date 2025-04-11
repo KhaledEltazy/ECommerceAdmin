@@ -32,4 +32,15 @@ class CloudinaryApi @Inject constructor() {
             }
         }
     }
+
+    suspend fun uploadImageByteArray(imageByteArray: ByteArray): String {
+        return withContext(Dispatchers.IO) {
+            try {
+                val request = cloudinary.uploader().upload(imageByteArray, ObjectUtils.emptyMap())
+                request["secure_url"] as String
+            } catch (e: Exception) {
+                throw Exception("Image upload failed: ${e.message}")
+            }
+        }
+    }
 }

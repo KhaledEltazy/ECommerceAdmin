@@ -128,6 +128,10 @@
     <string name="no_address_has_been_set_by_the_user">No address has been set by the user.</string>
     <string name="addresses">Addresses:</string>
     <string name="no_orders_have_been_placed_by_this_user">No orders have been placed by this user.</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="night_mode">Night Mode</string>
+    <string name="english">English</string>
+    <string name="arabic">Arabic</string>
 
     <string-array name="order_status_array">
         <item>Ordered</item>

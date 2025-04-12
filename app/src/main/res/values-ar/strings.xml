@@ -125,6 +125,10 @@
     <string name="no_address_has_been_set_by_the_user">لم يقم هذا المستخدم بأي طلبات.</string>
     <string name="addresses">العناوين</string>
     <string name="no_orders_have_been_placed_by_this_user">لم يُقم المستخدم بتحديد عنوان.</string>
+    <string name="dark_mode">الوضع الليلي</string>
+    <string name="night_mode">الوضع النهاري</string>
+    <string name="english">انجليزي</string>
+    <string name="arabic">عربي</string>
 
     <string-array name="order_status_array">
         <item>تم الطلب</item>

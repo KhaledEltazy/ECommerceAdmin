@@ -1,0 +1,6 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Arabic RTL Theme -->
+    <style name="Theme.ECommerceAdmin" parent="Base.Theme.ECommerceAdmin">
+        <item name="android:layoutDirection">rtl</item>
+    </style>
+</resources>

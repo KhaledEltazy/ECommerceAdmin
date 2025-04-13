@@ -1,4 +1,4 @@
-package com.android.ecommerceadmin.util
+package com.android.ecommerceadmin.service
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -14,7 +14,7 @@ import com.google.firebase.messaging.RemoteMessage
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AdminFirebaseMessagingService : FirebaseMessagingService() {
+class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         super.onMessageReceived(remoteMessage)

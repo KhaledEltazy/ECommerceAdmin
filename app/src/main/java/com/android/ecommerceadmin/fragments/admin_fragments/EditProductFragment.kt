@@ -1,5 +1,6 @@
 package com.android.ecommerceadmin.fragments.admin_fragments
 
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -41,6 +42,8 @@ class EditProductFragment : AddProductFragment() {
 
         // Populate images and colors
         images.addAll(currentProduct.images)
+        selectedImages.clear() // clear any leftovers
+        selectedImages.addAll(currentProduct.images.map { Uri.parse(it) }) // convert URLs to Uris
         selectedColors.addAll(currentProduct.color ?: emptyList())
 
         imageAdapter.setupImageList(images)

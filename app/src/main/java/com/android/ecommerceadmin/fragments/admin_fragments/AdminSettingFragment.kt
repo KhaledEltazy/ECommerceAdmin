@@ -138,8 +138,9 @@ class AdminSettingFragment : Fragment() {
             edFirstName.setText(user.firstName)
             edLastName.setText(user.lastName)
             edEmail.setText(user.email)
-            Glide.with(requireContext()).load(user.img).error(resources.getDrawable(R.drawable.baseline_person_24))
-                .into(imageUser)
+            val uriString = user.img
+           Glide.with(requireContext()).load(user.img ?: "").error(resources.getDrawable(R.drawable.baseline_person_24))
+             .into(imageUser)
         }
     }
 

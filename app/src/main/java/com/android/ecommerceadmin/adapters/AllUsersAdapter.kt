@@ -21,8 +21,11 @@ class AllUsersAdapter : RecyclerView.Adapter<AllUsersAdapter.AllUserViewHolder>(
                     binding.apply {
                         nameTvProfileFragment.text = "${user.firstName} ${user.lastName}"
                         emailTV.text = user.email
-                        Glide.with(itemView).load(user.img!!).error(
-                            R.drawable.baseline_person_24)
+                        val imageUrl = user.img?.takeIf { it.isNotEmpty() } ?: ""
+                        Glide.with(itemView.context)
+                            .load(imageUrl)
+                            .placeholder(R.drawable.settings_items_background)
+                            .error(R.drawable.baseline_person_24)
                             .into(imageNameProfileFragment)
                     }
                 }

@@ -59,7 +59,7 @@ class UserDetailsFragment : Fragment() {
         binding.apply {
             userNameTv.text = "${user.firstName} ${user.lastName}"
             emailUserTv.text = user.email
-            Glide.with(requireView()).load(user.img!!).
+            Glide.with(requireContext()).load(user.img ?: "").
             error(R.drawable.baseline_person_24).into(userImage)
         }
 

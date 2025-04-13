@@ -14,10 +14,12 @@ import com.android.ecommerceadmin.R
 import com.android.ecommerceadmin.data.Product
 import com.android.ecommerceadmin.util.Resource
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+@AndroidEntryPoint
 class EditProductFragment : AddProductFragment() {
 
     private val args by navArgs<EditProductFragmentArgs>()
@@ -25,14 +27,18 @@ class EditProductFragment : AddProductFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        // Load product details from arguments
         currentProduct = args.product
 
-        // Pre-fill UI fields with existing product data
+        prefillProductData()
+        setupRecyclerViews()
+        binding.fabSave.setOnClickListener { checkAndEditProduct() }
+        observeEditProductState()
+    }
+
+    private fun prefillProductData() {
         binding.apply {
             etName.setText(currentProduct.productName)
-            category.setText(currentProduct.category, false) // false = no filtering
+            category.setText(currentProduct.category, false)
             etPrice.setText(currentProduct.price.toString())
             etOffer.setText(currentProduct.offer?.toString() ?: "")
             etProductDescription.setText(currentProduct.productDescription ?: "")
@@ -40,64 +46,98 @@ class EditProductFragment : AddProductFragment() {
             etStock.setText(currentProduct.stock.toString())
         }
 
-        // Populate images and colors
+        images.clear()
         images.addAll(currentProduct.images)
-        selectedImages.clear() // clear any leftovers
-        selectedImages.addAll(currentProduct.images.map { Uri.parse(it) }) // convert URLs to Uris
+
+        selectedImages.clear()
+        selectedImages.addAll(currentProduct.images.map { Uri.parse(it) })
+
+        selectedColors.clear()
         selectedColors.addAll(currentProduct.color ?: emptyList())
-
-        imageAdapter.setupImageList(images)
-        colorAdapter.setupAdapterList(selectedColors)
-
-        checkingImagesRv()
-        checkingColorRv()
-
-        // Change FAB button action to edit product instead of adding new
-        binding.fabSave.setOnClickListener {
-            editProduct()
-        }
-
-        collectEditProductState()
     }
 
-    private fun editProduct() {
+    private fun setupRecyclerViews() {
+        imageAdapter.setupImageList(images)
+        colorAdapter.setupAdapterList(selectedColors)
+        checkingImagesRv()
+        checkingColorRv()
+    }
+
+    private fun checkAndEditProduct() {
         val productName = binding.etName.text.toString().trim()
         val category = binding.category.text.toString().trim()
         val priceStr = binding.etPrice.text.toString().trim()
         val offerStr = binding.etOffer.text.toString().trim()
         val description = binding.etProductDescription.text.toString().trim()
-        val sizes = getSizesList(binding.etSizes.text.toString().trim())
-        val stockValue = binding.etStock.text.toString().trim()
+        val sizesList = getSizesList(binding.etSizes.text.toString().trim())
+        val stockStr = binding.etStock.text.toString().trim()
 
         if (productName.isEmpty() || category.isEmpty() || priceStr.isEmpty()) {
             Toast.makeText(requireContext(), R.string.please_fill_require_text, Toast.LENGTH_SHORT).show()
             return
         }
 
+        val price = priceStr.toFloat()
+        val offer = offerStr.toFloatOrNull()
+        val stock = stockStr.toInt()
+
+        val currentImages = currentProduct.images
+        val updatedImages = (currentImages + selectedImages.map { it.toString() }).distinct()
+
+        val noChangesMade =
+            productName == currentProduct.productName &&
+                    category == currentProduct.category &&
+                    price == currentProduct.price &&
+                    offer == currentProduct.offer &&
+                    (description.ifEmpty { null } == currentProduct.productDescription) &&
+                    sizesList!!.toList() == currentProduct.sizes.orEmpty().toList() &&
+                    selectedColors.toList() == currentProduct.color.orEmpty().toList() &&
+                    stock == currentProduct.stock &&
+                    updatedImages == currentImages
+
+        if (noChangesMade) {
+            Toast.makeText(requireContext(), "No changes made.", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        editProduct(productName, category, price, offer, description, sizesList, stock)
+    }
+
+    private fun editProduct(
+        productName: String,
+        category: String,
+        price: Float,
+        offer: Float?,
+        description: String,
+        sizes: List<String>?,
+        stock: Int
+    ) {
         showingProgressBar()
 
         lifecycleScope.launch(Dispatchers.IO) {
             try {
-                // Upload new images if selected
-                val uploadedImages = selectedImages.map { cloudinaryApi.uploadImage(it, requireContext()) }
-                val finalImages = (currentProduct.images + uploadedImages).distinct() // Keep old + new images
+                val uploadedImages = selectedImages
+                    .filter { uri -> uri.toString() !in currentProduct.images }
+                    .map { uri -> cloudinaryApi.uploadImage(uri, requireContext()) }
+
+                val finalImages = (currentProduct.images + uploadedImages).distinct()
 
                 withContext(Dispatchers.Main) {
                     addProductViewModel.editProduct(
-                        id = currentProduct.id,
+                        productId = currentProduct.id,
                         productName = productName,
                         category = category,
-                        price = priceStr.toFloat(),
-                        offer = offerStr.toFloatOrNull(),
+                        price = price,
+                        offer = offer,
                         description = description.ifEmpty { null },
                         color = if (selectedColors.isEmpty()) null else selectedColors,
                         sizes = sizes,
                         images = finalImages,
-                        stock = stockValue.toInt()
+                        stock = stock
                     )
                 }
             } catch (e: Exception) {
-                Log.e("Edit Product Error", "Failed to update product", e)
+                Log.e("EditProductFragment", "Failed to update product", e)
                 withContext(Dispatchers.Main) {
                     Toast.makeText(requireContext(), "Failed to update product.", Toast.LENGTH_SHORT).show()
                     hidingProgressBar()
@@ -106,19 +146,19 @@ class EditProductFragment : AddProductFragment() {
         }
     }
 
-    private fun collectEditProductState() {
+    private fun observeEditProductState() {
         lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                addProductViewModel.editProduct.collect {
-                    when (it) {
+                addProductViewModel.editProduct.collect { result ->
+                    when (result) {
                         is Resource.Loading -> showingProgressBar()
                         is Resource.Success -> {
                             hidingProgressBar()
                             Snackbar.make(requireView(), "Product updated successfully", Snackbar.LENGTH_LONG).show()
-                            findNavController().popBackStack() // Navigate back after editing
+                            findNavController().popBackStack()
                         }
                         is Resource.Error -> {
-                            Snackbar.make(requireView(), it.message.toString(), Snackbar.LENGTH_LONG)
+                            Snackbar.make(requireView(), result.message.toString(), Snackbar.LENGTH_LONG)
                                 .addCallback(object : Snackbar.Callback() {
                                     override fun onDismissed(transientBottomBar: Snackbar?, event: Int) {
                                         hidingProgressBar()

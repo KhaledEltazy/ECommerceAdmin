@@ -13,7 +13,6 @@ import javax.inject.Singleton
 class CloudinaryApi @Inject constructor() {
     private val cloudinary = Cloudinary(
         mapOf(
-            //the codes inside fixedCode folder
             "cloud_name" to "",
             "api_key" to "",
             "api_secret" to ""

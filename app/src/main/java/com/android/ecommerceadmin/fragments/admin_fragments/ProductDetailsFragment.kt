@@ -47,7 +47,7 @@ class ProductDetailsFragment : Fragment() {
 
         //check if the product have color or not and submit color list to adapter
         if (product.color != null){
-            colorAdapter.setupAdapterList(product.color)
+            colorAdapter.setupAdapterList(product.color!!)
         } else {
             binding.tvColorProductDetails.visibility = View.GONE
             binding.rvColor.visibility = View.GONE

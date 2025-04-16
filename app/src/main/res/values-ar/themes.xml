@@ -2,5 +2,6 @@
     <!-- Arabic RTL Theme -->
     <style name="Theme.ECommerceAdmin" parent="Base.Theme.ECommerceAdmin">
         <item name="android:layoutDirection">rtl</item>
+        <item name="android:includeFontPadding">false</item>
     </style>
 </resources>

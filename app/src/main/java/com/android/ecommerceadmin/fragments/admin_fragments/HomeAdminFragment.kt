@@ -74,10 +74,12 @@ class HomeAdminFragment : Fragment() {
         binding.switchLanguage.isChecked = settingsViewModel.isArabic.value
 
         binding.switchMode.setOnCheckedChangeListener { _, isChecked ->
-            settingsViewModel.toggleDarkMode(isChecked)
-            AppCompatDelegate.setDefaultNightMode(
-                if (isChecked) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
-            )
+            binding.switchMode.setOnCheckedChangeListener { _, isChecked ->
+                settingsViewModel.toggleDarkMode(isChecked)
+                AppCompatDelegate.setDefaultNightMode(
+                    if (isChecked) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
+                )
+            }
         }
 
         binding.switchLanguage.setOnCheckedChangeListener { _, isChecked ->
@@ -87,7 +89,10 @@ class HomeAdminFragment : Fragment() {
             val config = resources.configuration
             config.setLocale(locale)
             requireActivity().resources.updateConfiguration(config, resources.displayMetrics)
-            requireActivity().recreate() // recreate to apply language
+
+            val navController = findNavController()
+            navController.popBackStack()
+            navController.navigate(R.id.homeAdminFragment)
         }
 
 

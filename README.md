@@ -76,7 +76,7 @@ I’ve recorded a full demo of how the Admin App works:
 ## Related Projects
 
 If you're interested in the **customer-facing eCommerce app**, check it out here:  
-👉 *Link to your customer app repo or folder*
+[👉 *Link to your customer app repo or folder*](https://github.com/KhaledEltazy/eCommerce)
 
 ---
 
